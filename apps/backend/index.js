@@ -1,21 +1,14 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const cors = require("cors");
+const corsMiddleware = require("./config/cors.js");
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5050;
 
-
+app.use(corsMiddleware);
 app.use(express.json());
-app.use(
-  cors({
-    origin: "*", 
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
 
 app.get("/", (req, res) => {
   res.status(200).send("<h1>Backend Running Successfully 🚀</h1>");
