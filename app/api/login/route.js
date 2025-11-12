@@ -10,7 +10,13 @@ export async function POST(req) {
       return NextResponse.json({ error: "All fields required" }, { status: 400 });
     }
 
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique(
+      { 
+        where: { 
+          email: email.toLowerCase()
+        } 
+      });
+      
     if (!user){
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }

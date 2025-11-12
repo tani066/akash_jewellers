@@ -12,12 +12,17 @@ export async function POST(req) {
 
     const existingUser = await prisma.user.findUnique({ 
         where:{ 
-            email 
+            email: email.toLowerCase()
         } 
     });
+
     if (existingUser) {
       return NextResponse.json({ error: "User already exists" }, { status: 400 });
     }
+
+    if (password.length < 8) {
+  return NextResponse.json({ error: "Password must be atleast 8 characters" }, { status: 400 });
+}
 
     const hashedPassword = hashPassword(password);
 
